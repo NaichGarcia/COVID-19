@@ -20,8 +20,17 @@ def get_data():
 	df = df.set_index("fecha")
 	df = df.sort_index()
 	return df
-#print(datos)
+with open('temp.json', 'w') as f:
+       f.write(get_data().to_json(orient='records', lines=True))
+f.close()
+
+with open("temp.json") as f:
+	file_data = json.load(f)
+
+#result = collection.insert(file_data)
+#print(a)
 #data = {"text" : "hello"}
-result = collection.insert_one(get_data())
-print(result.inserted_id)
+
+#file_data.close()
+#print(result.inserted_id)
 #print(client.list_database_names())
