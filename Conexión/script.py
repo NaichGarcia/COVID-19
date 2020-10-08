@@ -20,7 +20,7 @@ df.reset_index(inplace=True)
 data_dict = df.to_dict("records")
 
 #Insert de datos 
-result=db.InsetManyData(collection,data_dict)
+#result=db.InsetManyData(collection,data_dict)
 #Imprime todas las ID creadas con respecto a los insert
 #print(result)
 

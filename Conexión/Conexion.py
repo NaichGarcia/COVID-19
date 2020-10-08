@@ -32,9 +32,17 @@ class Database(object):
     @staticmethod
     def Get_Data_from_database(collection):
         bd = Database.DATABASE[collection]
-        array=[]
+        dic = {}
+        cont = 0
         for x in bd.find():
-            array.append(x)
+            dic.update(x)
+            cont = cont +1
+            variables = dic.items()
+            for k, v in variables:
+                print((k), ":", (v))
+            print("\n")
+        print("documentos totales = ", cont)
+
             
         #lista = bd.find()
-        return array
+        #return dic
