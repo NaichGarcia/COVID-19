@@ -27,4 +27,10 @@ class Database(object):
     @staticmethod
     def InsetOneData(collection,data):
         Database.DATABASE[collection].insert_one(data)
-    
+
+    #Obtener datos de Database
+    @staticmethod
+    def Get_Data_from_database(collection):
+        bd = Database.DATABASE[collection]
+        lista = bd.find()
+
