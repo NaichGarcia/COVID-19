@@ -55,9 +55,7 @@ class Database(object):
     #Consulta a mongo db de documentos segun un parametro
     @staticmethod
     def Query(collection,dato,valor):
-        client = pm.MongoClient(Database.URI)
-        mydb = client["covid"]
-        mycol = mydb[collection]
-        myquery = {dato:valor}
-        result = mycol.find(myquery)
+        bd = Database.DATABASE[collection] 
+        myquery = {dato:rest} 
+        result = bd.find(myquery) 
         return result
