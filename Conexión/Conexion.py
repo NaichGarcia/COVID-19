@@ -1,7 +1,8 @@
 import pymongo as pm
+from bson.json_util import loads, dumps
 
 class Database(object):
-    URI="mongodb://root:FVo8Ujz3XAPxVLwn@cluster0-shard-00-00.eghxh.mongodb.net:27017,cluster0-shard-00-01.eghxh.mongodb.net:27017,cluster0-shard-00-02.eghxh.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-wjnr0i-shard-0&authSource=admin&retryWrites=true&w=majority"
+    URI="mongodb://fandres21:felipe1997@cluster0-shard-00-00.eghxh.mongodb.net:27017,cluster0-shard-00-01.eghxh.mongodb.net:27017,cluster0-shard-00-02.eghxh.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-wjnr0i-shard-0&authSource=admin&retryWrites=true&w=majority"
     DATABASE=None
 
     #Inicializa la conexión hacia MongoDB
@@ -32,17 +33,12 @@ class Database(object):
     @staticmethod
     def Get_Data_from_database(collection):
         bd = Database.DATABASE[collection]
-        dic = {}
-        cont = 0
-        for x in bd.find():
-            dic.update(x)
-            cont = cont +1
-            variables = dic.items()
-            for k, v in variables:
-                print((k), ":", (v))
-            print("\n")
-        print("documentos totales = ", cont)
-
-            
-        #lista = bd.find()
-        #return dic
+        datos=bd.find().limit(2)
+        json_str =dumps(datos)
+        datos2=loads(json_str)
+        datos2=str(datos2)
+        datos2=datos2.encode(encoding='UTF-8',errors='strict')
+        with open('template.json','w') as f:
+            f.write(str(datos2))
+        return datos2
+    
