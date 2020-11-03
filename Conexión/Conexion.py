@@ -22,8 +22,11 @@ class Database(object):
     #Insertar Muchos datos (Registros) a MongoDB
     @staticmethod
     def InsetManyData(collection,data):
-        Insert=Database.DATABASE[collection].insert_many(data)
-        return Insert.inserted_ids
+        #Insert = Database.DATABASE[collection].insert(data)
+        #return Insert.inserted_id
+        #Forma de insertar a coleccion de transmision para evitar error de . en las columnas key
+        Insert = Database.DATABASE[collection].insert(data, check_keys=False)
+        return Insert
         
 
     #Insertar un dato (Registro) a MongoDB
