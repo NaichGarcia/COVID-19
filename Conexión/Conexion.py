@@ -2,7 +2,6 @@ import pymongo as pm
 from bson.json_util import loads, dumps
 import os.path as path
 
-
 class Database(object):
     URI="mongodb://root:FVo8Ujz3XAPxVLwn@cluster0-shard-00-00.eghxh.mongodb.net:27017,cluster0-shard-00-01.eghxh.mongodb.net:27017,cluster0-shard-00-02.eghxh.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-wjnr0i-shard-0&authSource=admin&retryWrites=true&w=majority"
     DATABASE=None
@@ -22,12 +21,10 @@ class Database(object):
     #Insertar Muchos datos (Registros) a MongoDB
     @staticmethod
     def InsetManyData(collection,data):
-        #Insert = Database.DATABASE[collection].insert(data)
-        #return Insert.inserted_id
-        #Forma de insertar a coleccion de transmision para evitar error de . en las columnas key
-        Insert = Database.DATABASE[collection].insert(data, check_keys=False)
-        return Insert
-        
+        Insert=Database.DATABASE[collection].insert_many(data)
+        return Insert.inserted_ids
+
+
 
     #Insertar un dato (Registro) a MongoDB
     @staticmethod
@@ -47,18 +44,17 @@ class Database(object):
     @staticmethod
     def Bson_to_Json(datos,nameFile):
         json_str= dumps(datos)
-        json_loads=loads(json_str)
-        json_loads=str(json_loads)
+        print(json_str)
+        json_loads=str(json_str)
         json_encode=json_loads.encode(encoding='UTF-8',errors='strict')
         with open('../Templates/'+nameFile+'.json','w') as f:
             f.write(str(json_encode))
         if path.exists('../Templates/'+nameFile+'.json'):
             return '{"statuscode" : 200,"File" : '+nameFile+'}'
         
-    #Consulta a mongo db de documentos segun un parametro
-    @staticmethod
-    def Query(collection,dato,valor):
+    @staticmethod 
+    def Query(collection,dato,rest): 
         bd = Database.DATABASE[collection] 
-        myquery = {dato:valor} 
+        myquery = {dato:rest} 
         result = bd.find(myquery) 
         return result
