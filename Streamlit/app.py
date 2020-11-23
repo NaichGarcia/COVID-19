@@ -17,13 +17,26 @@ def Graficos_Mario():
     region = st.sidebar.multiselect("Elegir regiones",
                                     ["Atacama", "Ñuble", "Magallanes", "Arica y Parinacota", "Aysén", "Coquimbo",
                                      "Araucanía", "Los Lagos", "Los Ríos", "Magallanes", "Tarapacá", "Valparaíso",
-                                     "Biobío", "O’Higgins", "Maule", "Metropolitana"],["Araucanía"])
+                                     "Biobío", "O’Higgins", "Maule", "Metropolitana","Todas las Regiones"],["Araucanía"])
     for e in range (len(region)):
         st.write(df_from_json[['Region','positividad','fecha']].loc[(df_from_json['Region'] ==str(region[e])) & (df_from_json['positividad']>=0)])
     chart_data = pd.DataFrame(
         np.random.randn(20, len(region)), columns=region)
 
     st.line_chart(chart_data)
+        for i in range(len(region)):
+        if region[i]=="Todas las Regiones":
+            st.write("""
+   ━━━━-╮\n 
+╰┃ ┣▇━▇\n
+ ┃ ┃  ╰━▅╮\n
+ ╰┳╯ ╰━━┳╯F A S I L I T O\n
+  ╰╮ ┳━━╯  EL \n
+ ▕▔▋ ╰╮╭━╮TUTORIAL\n
+╱▔╲▋╰━┻┻╮╲╱▔▔▔╲\n
+▏  ▔▔▔▔▔▔▔  O O┃\n
+╲╱▔╲▂▂▂▂╱▔╲▂▂▂╱\n
+ ▏╳▕▇▇▕ ▏╳▕▇▇▕""")
 
     # Posibilida de graficar en base a un mapa pero faltaria latitud y longitud para las zonas
     # map_data = pd.DataFrame(
