@@ -6,6 +6,8 @@ import numpy as np
 
 #Prueba de graficos con json
 def Graficos_Mario():
+    #DAtos para graficos con info real
+    aRegion = []
     st.sidebar.title('Navegación')
     df_from_json = pd.read_json('../Json/PCR_Regional.json')
     df_from_json['positividad'] = np.where(np.isnan(df_from_json['positividad']), 0, df_from_json['positividad'])
@@ -19,25 +21,20 @@ def Graficos_Mario():
                                     ["Atacama", "Ñuble", "Magallanes", "Arica y Parinacota", "Aysén", "Coquimbo",
                                      "Araucanía", "Los Lagos", "Los Ríos", "Magallanes", "Tarapacá", "Valparaíso",
                                      "Biobío", "O’Higgins", "Maule", "Metropolitana","Todas las Regiones"],["Araucanía"])
-    for e in range (len(region)):
-        st.write(df_from_json[['Region','positividad','fecha']].loc[(df_from_json['Region'] ==str(region[e])) & (df_from_json['positividad']>=0)])
-    chart_data = pd.DataFrame(
-        np.random.randn(20, len(region)), columns=region)
+    for e in range(len(region)):
+        aRegion = df_from_json[['positividad', 'fecha']].loc[
+            (df_from_json['Region'] == str(region[e])) & (df_from_json['positividad'] >= 0)]
 
-    st.line_chart(chart_data)
-    for i in range(len(region)):
-        if region[i]=="Todas las Regiones":
-            st.write("""
-   ━━━━-╮\n 
-╰┃ ┣▇━▇\n
- ┃ ┃  ╰━▅╮\n
- ╰┳╯ ╰━━┳╯F A S I L I T O\n
-  ╰╮ ┳━━╯  EL \n
- ▕▔▋ ╰╮╭━╮TUTORIAL\n
-╱▔╲▋╰━┻┻╮╲╱▔▔▔╲\n
-▏  ▔▔▔▔▔▔▔  O O┃\n
-╲╱▔╲▂▂▂▂╱▔╲▂▂▂╱\n
- ▏╳▕▇▇▕ ▏╳▕▇▇▕""")
+        st.write(df_from_json[['Region', 'positividad', 'fecha']].loc[
+                     (df_from_json['Region'] == str(region[e])) & (df_from_json['positividad'] >= 0)])
+        # Esta linea borra los indices del dataframe
+        aRegion.reset_index(drop=True, inplace=True)
+        chart_data = pd.DataFrame(
+            np.random.randn(20, len(region)), columns=region
+        )
+
+    st.line_chart(aRegion)
+
     # Posibilida de graficar en base a un mapa pero faltaria latitud y longitud para las zonas
     # map_data = pd.DataFrame(
     #   np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
