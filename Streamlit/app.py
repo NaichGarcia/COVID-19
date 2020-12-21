@@ -5,7 +5,7 @@ import json
 import numpy as np
 
 #Prueba de graficos con json
-def Graficos_Mario():
+def Graficos_Pcr_Nacional():
     #DAtos para graficos con info real
     aRegion = []
     st.sidebar.title('Navegación')
@@ -40,7 +40,7 @@ def Graficos_Mario():
 
     # st.map(map_data)
 
-Graficos_Mario()
+Graficos_Pcr_Nacional()
 
 
 
