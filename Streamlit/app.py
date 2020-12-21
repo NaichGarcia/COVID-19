@@ -22,18 +22,16 @@ def Graficos_Mario():
                                      "Araucanía", "Los Lagos", "Los Ríos", "Magallanes", "Tarapacá", "Valparaíso",
                                      "Biobío", "O’Higgins", "Maule", "Metropolitana","Todas las Regiones"],["Araucanía"])
     for e in range(len(region)):
-        aRegion = df_from_json[['positividad', 'fecha']].loc[
-            (df_from_json['Region'] == str(region[e])) & (df_from_json['positividad'] >= 0)]
+        info = df_from_json[['positividad']].loc[
+            (df_from_json['Region'] == str(region[e]))]
+        info.reset_index(drop=True, inplace=True)
 
-        st.write(df_from_json[['Region', 'positividad', 'fecha']].loc[
-                     (df_from_json['Region'] == str(region[e])) & (df_from_json['positividad'] >= 0)])
-        # Esta linea borra los indices del dataframe
-        aRegion.reset_index(drop=True, inplace=True)
         chart_data = pd.DataFrame(
-            np.random.randn(20, len(region)), columns=region
+            data=info,
+            columns=region
         )
-
-    st.line_chart(aRegion)
+        info.rename(columns={'positividad': region[e]}, inplace=True)
+    st.line_chart(info, 800, 400)
 
     # Posibilida de graficar en base a un mapa pero faltaria latitud y longitud para las zonas
     # map_data = pd.DataFrame(
